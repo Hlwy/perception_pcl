@@ -350,25 +350,10 @@ namespace pcl_conversions {
 
   /** pcl::Vertices <=> pcl_msgs::Vertices **/
 
-  namespace internal
-  {
-    template <class T>
-    inline void move(std::vector<T> &a, std::vector<T> &b)
-    {
-      b.swap(a);
-    }
-
-    template <class T1, class T2>
-    inline void move(std::vector<T1> &a, std::vector<T2> &b)
-    {
-      b.assign(a.cbegin(), a.cend());
-    }
-  }
-
   inline
   void fromPCL(const pcl::Vertices &pcl_vert, pcl_msgs::Vertices &vert)
   {
-    vert.vertices.assign(pcl_vert.vertices.cbegin(), pcl_vert.vertices.cend());
+    vert.vertices = pcl_vert.vertices;
   }
 
   inline
@@ -385,7 +370,7 @@ namespace pcl_conversions {
   inline
   void moveFromPCL(pcl::Vertices &pcl_vert, pcl_msgs::Vertices &vert)
   {
-    internal::move(pcl_vert.vertices, vert.vertices);
+    vert.vertices.swap(pcl_vert.vertices);
   }
 
   inline
@@ -402,7 +387,7 @@ namespace pcl_conversions {
   inline
   void toPCL(const pcl_msgs::Vertices &vert, pcl::Vertices &pcl_vert)
   {
-    pcl_vert.vertices.assign(vert.vertices.cbegin(), vert.vertices.cend());
+    pcl_vert.vertices = vert.vertices;
   }
 
   inline
@@ -419,7 +404,7 @@ namespace pcl_conversions {
   inline
   void moveToPCL(pcl_msgs::Vertices &vert, pcl::Vertices &pcl_vert)
   {
-    internal::move(vert.vertices, pcl_vert.vertices);
+    pcl_vert.vertices.swap(vert.vertices);
   }
 
   inline
